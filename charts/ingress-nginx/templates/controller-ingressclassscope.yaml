@@ -1,0 +1,28 @@
+{{- if .Values.controller.ingressClassResource.enabled -}}
+apiVersion: gateway.kubesphere.io/v1alpha2
+kind: IngressClassScope
+metadata:
+  name: {{ include "ingress-nginx.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubesphere.io/instance: {{ include "ingress-nginx.fullname" . }}
+    {{- include "ingress-nginx.labels" . | nindent 4 }}
+    {{- with .Values.controller.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  scope:
+    {{- if .Values.controller.scope.enabled }}
+    namespaces:
+      - {{ default (.Release.Namespace) (.Values.controller.scope.namespace) }}
+    {{- else }}
+    namespaces: []
+    {{- end }}
+    namespaceSelector: {{ default "" .Values.controller.scope.namespaceSelector | quote }}
+
+  ingressClass:
+    # -- Name of the ingressClass
+    name: {{ .Values.controller.ingressClassResource.name }}
+    # -- Is this the default ingressClass for the cluster
+    default: {{ .Values.controller.ingressClassResource.default }}
+{{- end }}

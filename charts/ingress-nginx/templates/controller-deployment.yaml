@@ -11,9 +11,11 @@ metadata:
     {{- end }}
   name: {{ include "ingress-nginx.controller.fullname" . }}
   namespace: {{ .Release.Namespace }}
-  {{- if .Values.controller.annotations }}
-  annotations: {{ toYaml .Values.controller.annotations | nindent 4 }}
-  {{- end }}
+  annotations:
+    {{- if .Values.controller.annotations }}
+    {{ toYaml .Values.controller.annotations | nindent 4 }}
+    {{- end }}
+    servicemesh.kubesphere.io/enabled: {{ .Values.controller.integrateKubeSphere.tracing | quote }}
 spec:
   selector:
     matchLabels:
@@ -30,12 +32,13 @@ spec:
   minReadySeconds: {{ .Values.controller.minReadySeconds }}
   template:
     metadata:
-    {{- if .Values.controller.podAnnotations }}
       annotations:
-      {{- range $key, $value := .Values.controller.podAnnotations }}
+      {{- if .Values.controller.podAnnotations }}
+        {{- range $key, $value := .Values.controller.podAnnotations }}
         {{ $key }}: {{ $value | quote }}
+        {{- end }}
       {{- end }}
-    {{- end }}
+        sidecar.istio.io/inject: {{ .Values.controller.integrateKubeSphere.tracing | quote }}
       labels:
         {{- include "ingress-nginx.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: controller

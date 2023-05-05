@@ -119,6 +119,11 @@ controller:
     # does not require extra parameters.
     parameters: {}
 
+  #  integrate with KubeSphere platform
+  integrateKubeSphere:
+    # -- Enable `Tracing` or not
+    tracing: false
+
   # -- For backwards compatibility with ingress.class annotation, use ingressClass.
   # Algorithm is as follows, first ingressClassName is considered, if not present, controller looks for ingress.class annotation
   ingressClass: nginx
@@ -500,7 +505,7 @@ controller:
       http: http
       https: https
 
-    type: LoadBalancer
+    type: NodePort
 
     ## type: NodePort
     ## nodePorts:

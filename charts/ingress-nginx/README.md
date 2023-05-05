@@ -367,6 +367,7 @@ Kubernetes: `>=1.20.0-0`
 | controller.minAvailable | int | `1` |  |
 | controller.minReadySeconds | int | `0` | `minReadySeconds` to avoid killing pods before we are ready # |
 | controller.name | string | `"controller"` |  |
+| controller.integrateKubeSphere.tracing | bool | `false` | Enable `Tracing` or not |
 | controller.nodeSelector | object | `{"kubernetes.io/os":"linux"}` | Node labels for controller pod assignment # Ref: https://kubernetes.io/docs/user-guide/node-selection/ # |
 | controller.podAnnotations | object | `{}` | Annotations to be added to controller pods # |
 | controller.podLabels | object | `{}` | Labels to add to the pod container metadata |
@@ -414,7 +415,7 @@ Kubernetes: `>=1.20.0-0`
 | controller.service.ports.https | int | `443` |  |
 | controller.service.targetPorts.http | string | `"http"` |  |
 | controller.service.targetPorts.https | string | `"https"` |  |
-| controller.service.type | string | `"LoadBalancer"` |  |
+| controller.service.type | string | `"NodePort"` |  |
 | controller.shareProcessNamespace | bool | `false` |  |
 | controller.sysctls | object | `{}` | See https://kubernetes.io/docs/tasks/administer-cluster/sysctl-cluster/ for notes on enabling and using sysctls |
 | controller.tcp.annotations | object | `{}` | Annotations to be added to the tcp config configmap |

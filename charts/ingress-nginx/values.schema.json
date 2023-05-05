@@ -1,0 +1,72 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "type": "object",
+    "properties": {
+        "controller": {
+            "type": "object",
+            "properties": {
+                "integrateKubeSphere": {
+                    "type": "object",
+                    "title": "Integrate KubeSphere",
+                    "form": true,
+                    "properties": {
+                        "tracing": {
+                            "type": "boolean",
+                            "title": "Enable Tracing (If routes cannot be accessed after Tracing is enabled, please add the annotation nginx.ingress.kubernetes.io/service-upstream: true to the route)",
+                            "form": true
+                        }
+                    }
+                },
+                "scope": {
+                    "type": "object",
+                    "title": "Scope",
+                    "form": true,
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "title": "Enabled (Limit the scope of the controller to a specific namespace)",
+                            "form": true
+                        },
+                        "namespace": {
+                            "type": "string",
+                            "title": "Namespace (Limit the controller to; defaults to $(POD_NAMESPACE))",
+                            "form": true
+                        },
+                        "namespaceSelector": {
+                            "type": "string",
+                            "title": "NamespaceSelector (When scope.enabled == false, instead of watching all namespaces, we watching namespaces whose labels \nonly match with namespaceSelector. Format like foo=bar. Defaults to empty, means watching all namespaces)",
+                            "form": true
+                        }
+                    }
+                },
+                "replicaCount": {
+                    "type": "integer",
+                    "title": "Deployment replicaCount",
+                    "form": true
+                },
+                "service": {
+                    "type": "object",
+                    "title": "Service",
+                    "form": true,
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "title": "Type",
+                            "form": true
+                        }
+                    }
+                },
+                "ingressClassResource": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "title": "IngressClass Name",
+                            "form": true
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
